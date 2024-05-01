@@ -5,13 +5,182 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script>
+                function deleteItem(id) {
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('deleteForm_' + id).submit();
+                        }
+                        });
+                }
+            </script>
+            <script src="https://kit.fontawesome.com/90297b3c39.js" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <style>
+        body {
+            background-color: white; /* White background */
+        }
+        </style>
+
+    {# admin page is here ----------------------------------------------------------------------- #}
+    {% if  app.user and is_granted('ROLE_ADMIN')  %}
+        <div class="row" id=""n1>
+            <div class="col-md-2">
+               <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark  " style=" height:100vh">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-4">{{app.user.username}}</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" aria-current="page">
+                    Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{{path('orders_list')}}" class="nav-link text-white">
+                    Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('product_list') }}" class="nav-link text-white">
+                    Products
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('category_list') }}" class="nav-link text-white">
+                    Category
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('users_list') }}" class="nav-link text-white">
+                    Users
+                    </a>
+                </li>
+                </ul>
+                <hr>
+                <div class="">
+                <a href="{{path('app_logout')}}" class="d-flex align-items-center text-white text-decoration-none " aria-expanded="false">
+                    <strong>Logout</strong>
+                </a>
+                
+                </div>
+                </div> 
+            </div>
+            <div class="col-md-10" id="r1">
+            
+        
+
+     
+     {# down in the end of file you will find this its the cloe div of row and col-md10
+
+        {% if  app.user and is_granted('ROLE_ADMIN')  %}
+                </div> {# end col-md-10 #r1 
+            </div>  end row id #n1 
+        {% endif %} 
+
+        #}
+
+    {# user page is here ----------------------------------------------------------------------- #}
+
+    {% else %}
+
+        {% block navbar %}
+            <nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+                <div class="container">
+                    <a class="navbar-brand d-md-none" href="#">
+                    <svg class="bi" width="24" height="24"><use xlink:href="#aperture"></use></svg>
+                    Aperture
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasLabel">Aperture</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav flex-grow-1 justify-content-between">
+                            <li class="nav-item"><a class="nav-link" href="#">
+                                <svg class="bi" width="24" height="24"><use xlink:href="#aperture"></use></svg>
+                            </a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('home')}}">Tour</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('product_list')}}" >Product</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Support</a>
+                            </li>
+                            <!-- cart -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{path('user_order_list')}}">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        {% if app.user %}
+                            <ul class="navbar-nav flex-grow-1 justify-content-end gap-3">
+                                <li>
+                                    <span class="fw-bold ">{{app.user.username}}</span>
+                                </li>
+                                <li>
+                                    <a href="{{path('app_logout')}}" class = "btn  btn-sm btn-dark">logout</a>
+                                </li>
+                                
+                            </ul> 
+                        {% else  %}
+                            <ul class="navbar-nav flex-grow-1 justify-content-end gap-3">
+                                <li>
+                                    <a href="{{path('app_login')}}" class = "btn btn-sm btn-primary">Sign in</a>
+                                </li>
+                                <li>
+                                    <a href="{{path('app_register')}}" class = "btn btn-sm btn-success">Sign up</a>
+                                </li>
+                            </ul>   
+                        {% endif %}
+                        
+                    </div>
+                    </div>
+                </div>
+            </nav>
+        
+        {% endblock %}
+        
+        {% endif %}
+        
+            
+        {% block body %}
+        {% endblock %}
+        {% if  app.user and is_granted('ROLE_ADMIN')  %}
+{# --------------------------this form side nave bar of admin------------------------------------------------------- #}
+                </div> {# end col-md-10 #r1 #}
+            </div> {# end row id #n1 #}
+        {% endif %}
+
+        
     </body>
+    
 </html>

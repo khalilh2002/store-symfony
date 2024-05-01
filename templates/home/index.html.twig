@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<main class="m-3">
+  {% if items %}
+  
+<section>
+<!-- Main content -->
+  <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="d-flex justify-content-around align-items-center" >
+          <img src="{{asset('uploads/'~ items.image)}}" alt="" style="max-height:200px" srcset="" class="rounded">
+        </div>
+        <div class="container">
+          <div class="carousel-caption text-start ">
+            <h1 class="text-primary">{{items.name}}</h1>
+            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="row m-5 d-none">
+  <div class="d-flex justify-content-around align-items-center text-center">
+      <div class="card m-2" >
+        <div class="card-header ">
+          <img class="d-block mx-auto mb-4 rounded mx-auto d-block" src="{{asset('uploads/'~ items.image)}}" alt="" >
+        <h1 class="display-5 fw-bold text-body-emphasis">{{items.name}}</h1>
+          <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">{{items.descritption}}</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <button type="button" class="btn btn-primary btn-lg">Product</button>
+              <button type="button" class="btn btn-outline-secondary btn-lg">Category</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div> 
+  </div>
+</section>
+{% endif %}
+<!-- product menu-->
+<section>
+  <div class="mx-4 ">
+      <div class="row my-5">
+        <div class="col-md-12">
+          <div class="my-3 d-flex justify-content-between align-items-center">
+              <button type="button" class="btn btn-primary position-relative">
+              Products
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{products|length }}
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </button>  
+            <div>
+              <a href="{{path('home')}}" class="btn btn-outline-dark btn-s">All</a>
+
+              {% for category in categories %}
+
+                <a href="{{ path('product_category',{category:category.id}) }}" class="btn btn-outline-dark btn-sm">{{category.name}}</a>
+
+              {% endfor %}
+            </div>
+          </div>    
+        </div>
+      </div>
+      <div class="row gap-3">
+        {% if  products|length  %}
+          {% for product in products %}
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="{{asset('uploads/'~product.image)}}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">{{product.descritption}}.</p>
+                    <h5> <span class="text text-danger">{{product.price}}</span>  DH</h5>
+                    <a href="{{ path('product_show',{id:product.id}) }}" class="btn btn-primary">show</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          {% endfor %}
+        {% else %}
+          <div class="alert alert-info">
+            NO Product..
+          </div>
+          
+        {% endif %}
+      </div>
+  </div>
+</section>
+
+</main>
+
+
+
+{% endblock %}

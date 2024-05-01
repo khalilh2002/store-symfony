@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello categoryController!{% endblock %}
+
+{% block body %}
+<div class="">
+    
+    <div class="row my-5">
+        <div class="col-md-10 mx-auto ">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+                <div class="card ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>category List</span> 
+                        <a href="{{path('category_store')}}" class="btn btn-sm btn-primary">
+                            Add
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>name</th>
+                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td>{{category.id}}</td>
+                                        <td>{{category.name}}</td>
+                                        
+                                        <td class="d-flex justify-content-around align-items-center">
+                                            <a href="{{path('category_show',{id:category.id})}}" class="btn btn-dark btn-sm">Show</a>
+                                            <a href="{{path('category_edit',{id:category.id})}}" class="btn btn-warning btn-sm">Edit</a>
+                                            
+                                            <form id="deleteForm_{{category.id}}" action="{{path('category_delete',{id: category.id})}}" method="post">
+                                               <button type="button" onclick="deleteItem('{{ category.id }}')" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                            
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        
+    </div>
+    
+</div>
+{% endblock %}
+

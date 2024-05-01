@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Orders list{% endblock %}
+
+{% block body %}
+<div class="">
+    
+    <div class="row my-5">
+        <div class="col-md-10 mx-auto ">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+                <div class="card ">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Order List</span> 
+                        <a href="{{path('home')}}" class="btn btn-sm btn-outline-primary">
+                            home
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>product</th>
+                                    <th>price</th>
+                                    <th>status</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set sum = 0 %}
+                                {% for order in user.getOrders() %}
+                                    {% set sum = sum + order.price %}
+                                    <tr>
+                                        <td>{{order.id}}</td>
+                                        <td>{{order.pname}}</td>
+                                        <td>{{order.price}}</td>
+                                        <td>
+                                            {% if order.status == "Processing.." %}
+                                                <span class="badge bg-dark">
+                                                    {{order.status}}
+                                                </span>
+                                                
+
+                                            {% elseif order.status == "Shiping" %}  
+                                                <span class="badge bg-success">
+                                                    {{order.status}}
+                                                </span>
+                                            {% else %}
+                                                <span class="badge bg-warning">
+                                                    {{order.status}}
+                                                </span>
+
+                                            {% endif %}
+                                        
+                                        </td>                                      
+                                        <td class="d-flex justify-content-around align-items-center">
+                                            <form id="deleteForm_{{order.id}}" action="{{path('order_delete',{order: order.id})}}" method="post">
+                                               <button type="button" onclick="deleteItem('{{ order.id }}')" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                            
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr class="text-center">
+                                    <th colspan="3" >Total</th>
+                                    <td class="fw-bold">{{sum}} DH</td>
+                                </tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        
+    </div>
+    
+</div>
+{% endblock %}
