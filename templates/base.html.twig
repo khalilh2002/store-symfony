@@ -29,6 +29,10 @@
                         }
                         });
                 }
+                function submitClick(id_para) {
+                    document.getElementById(id_para).submit();
+
+                }
             </script>
             <script src="https://kit.fontawesome.com/90297b3c39.js" crossorigin="anonymous"></script>
         {% endblock %}
@@ -40,159 +44,128 @@
         }
         </style>
 
-    {# admin page is here ----------------------------------------------------------------------- #}
-    {% if  app.user and is_granted('ROLE_ADMIN')  %}
-    <header>
-        <div class="px-3 py-2 text-bg-dark border-bottom">
-        <div class="container">
-           
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-             
-                
-
-            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                
-
-                <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="fa-solid fa-gauge"></i>
-                    Dashboard
-                </a>
-                </li>
-                <li>
-                <a href="{{path('orders_list')}}" class="nav-link text-white">
-                    <i class="fa-solid fa-cart-shopping"></i>
-
-                    Orders
-                </a>
-                </li>
-                <li>
-                <a href="{{ path('product_list') }}" class="nav-link text-white">
-                    <i class="fa-solid fa-shirt"></i>
-
-                    Products
-                </a>
-                </li>
-                <li>
-                <a href="{{ path('category_list') }}" class="nav-link text-white">
-                    <i class="fa-solid fa-list"></i>
-                    Categories
-                </a>
-                </li>
-                <li>
-                <a href="{{ path('users_list') }}" class="nav-link text-white">
-                    <i class="fa-regular fa-user"></i>
-                    Customers
-                </a>
-                </li>
-            </ul>
-            <div class="d-flex align-items-start justify-self-start">
-                <a href="{{path('app_logout')}}" class="text-white text-decoration-none " aria-expanded="false">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                    Logout
-                </a>
-            </div>
-            </div>
-        </div>
-        </div>
-        
-    </header>
     
-        {# <div class="row" id=""n1>
-            <div class="col-md-2">
-               <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark  " style=" height:100vh">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                <span class="fs-4">{{app.user.username}}</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" aria-current="page">
-                    Home
-                    </a>
-                </li>
-                <li>
-                    <a href="{{path('orders_list')}}" class="nav-link text-white">
-                    Orders
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('product_list') }}" class="nav-link text-white">
-                    Products
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('category_list') }}" class="nav-link text-white">
-                    Category
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('users_list') }}" class="nav-link text-white">
-                    Users
-                    </a>
-                </li>
-                </ul>
-                <hr>
-                
-                </div> 
-            </div>
-            <div class="col-md-10" id="r1"> #}
-            
-        
-
-     
-     {# down in the end of file you will find this its the cloe div of row and col-md10
-
+    {% block navbar %}{# admin page is here ----------------------------------------------------------------------- #}
+    
         {% if  app.user and is_granted('ROLE_ADMIN')  %}
-                </div> {# end col-md-10 #r1 
-            </div>  end row id #n1 
-        {% endif %} 
-
-        #}
-
-    {# user page is here ----------------------------------------------------------------------- #}
-
-    {% else %}
-
-        {% block navbar %}
-
-            <header class="p-3 text-bg-dark">
-                <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                    </a>
-
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-between gap-4 mb-md-0 ">
-                    <li><a href="{{path('home')}}" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="{{path('user_order_list')}}"class="nav-link px-2 text-white"> <i class="fa-solid fa-cart-shopping"></i></a></li>
-                    </ul>
-
-                    <form class="d-none col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
-                    </form>
-                    {% if not app.user %}
-                        <div class="text-end">
-                        <a type="button"  href="{{path('app_login')}}" class="btn btn-outline-light me-2">Login</a>
-                        <a type="button" href="{{path('app_register')}}" class="btn btn-warning">Sign-up</a>
-                        </div>    
-                    {% endif %}
+            <header>
+                <div class="px-3 py-2 text-bg-dark border-bottom">
+                    <div class="container">
                     
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                        </a>
+                        
+                            
+
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            
+
+                            <li>
+                            <a href="{{path('home')}}" class="nav-link text-white">
+                                <i class="fa-solid fa-gauge"></i>
+                                Dashboard
+                            </a>
+                            </li>
+                            <li>
+                            <a href="{{path('orders_list')}}" class="nav-link text-white">
+                                <i class="fa-solid fa-cart-shopping"></i>
+
+                                Orders
+                            </a>
+                            </li>
+                            <li>
+                            <a href="{{ path('product_list') }}" class="nav-link text-white">
+                                <i class="fa-solid fa-shirt"></i>
+
+                                Products
+                            </a>
+                            </li>
+                            <li>
+                            <a href="{{ path('category_list') }}" class="nav-link text-white">
+                                <i class="fa-solid fa-list"></i>
+                                Categories
+                            </a>
+                            </li>
+                            <li>
+                            <a href="{{ path('users_list') }}" class="nav-link text-white">
+                                <i class="fa-regular fa-user"></i>
+                                Customers
+                            </a>
+                            </li>
+                        </ul>
+                        <div class="d-flex align-items-start justify-self-start">
+                            <a href="{{path('app_logout')}}" class="text-white text-decoration-none " aria-expanded="false">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </a>
+                        </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
+                
             </header>
         
-        {% endblock %}
-        
+            {# <div class="row" id=""n1>
+            {# user page is here ----------------------------------------------------------------------- #}
+
+        {% else %}
+
+            
+
+                <header class="p-3 text-bg-dark">
+                    <div class="container">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                            </a>
+
+                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-between gap-4 mb-md-0 ">
+
+                                <li><a href="{{path('home')}}" class="nav-link px-2 mx-5 text-white"><i class="fa-solid fa-house"></i> Home</a></li>
+                                <li><a href="{{path('product_user')}}" class="nav-link px-2 mx-5 text-white"><i class="fa-solid fa-bag-shopping"></i> Product</a></li>
+                                <li><a href="{{path('user_order_list')}}"class="nav-link px-2 mx-5 text-secondary"> <i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+
+                            </ul>
+                            <form id = "myFormSearch" method="GET" action="{{ path('product_search') }}" class="row col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 " role="search">
+                                <input type="search" name="searchBar" class="form-control form-control-dark text-bg-dark " placeholder="Search..." aria-label="Search">
+                            </form>
+
+
+                            {% if not app.user %}
+                                <div class="text-end">
+                                    <a type="button"  href="{{path('app_login')}}" class="btn btn-outline-light me-2">Login</a>
+                                    <a type="button" href="{{path('app_register')}}" class="btn btn-warning">Sign-up</a>
+                                </div>   
+                            {% else %} 
+                                <div class="dropdown text-end">
+                                    <a href="{{path('users_profile')}}" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{ asset('uploads/profile/'~ app.user.getImage() ) }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                                    </a>
+
+                                    <ul class="dropdown-menu text-small" style="">
+                                        <li><a class="dropdown-item" href="{{path('users_profile')}}">Profile</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="{{path('app_logout')}}">Sign out</a></li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </header>
+                
         {% endif %}
+
+                
+
+    {% endblock %}
+        
         
             
-        {% block body %}
-        {% endblock %}
+    {% block body %}
+    {% endblock %}
         
 
         
